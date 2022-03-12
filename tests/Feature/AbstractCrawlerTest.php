@@ -1,4 +1,5 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler\Tests\Feature;
 
 use FerOliveira\GoogleCrawler\Result;
@@ -7,11 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractCrawlerTest extends TestCase
 {
-    /**
-     * Check if there are results and if they are valid
-     *
-     * @param ResultList $results
-     */
     public function checkResults(ResultList $results): void
     {
         static::assertNotEmpty($results->getResults());

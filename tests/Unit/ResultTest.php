@@ -1,4 +1,5 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler\Tests\Unit;
 
 use FerOliveira\GoogleCrawler\Exception\InvalidUrlException;
@@ -27,11 +28,11 @@ class ResultTest extends TestCase
     {
         $result = new Result();
         $description = <<<EOL
- Test
-description
-with
-newline chars 
-EOL;
+            Test
+            description
+            with
+            newline chars 
+            EOL;
         $result->setDescription($description);
 
         static::assertEquals('Test description with newline chars', $result->getDescription());

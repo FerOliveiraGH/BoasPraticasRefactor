@@ -1,4 +1,5 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler\Tests\Unit\Proxy;
 
 use FerOliveira\GoogleCrawler\Exception\InvalidResultException;

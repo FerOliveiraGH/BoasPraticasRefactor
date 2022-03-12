@@ -1,4 +1,5 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler\Tests\Unit;
 
 use FerOliveira\GoogleCrawler\Result;

@@ -1,24 +1,13 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler;
 
 use Ds\Vector;
 
-/**
- * List of Results
- *
- * @package FerOliveira\GoogleCrawler
- * @author Fernando Oliveira
- */
 class ResultList implements \IteratorAggregate
 {
-    /** @var Vector $results */
-    private $results;
+    private Vector $results;
 
-    /**
-     * Initializes the result Vector
-     *
-     * @param int|null $capacity If informed, the vector is initialized with this capacity
-     */
     public function __construct(int $capacity = null)
     {
         $this->results = new Vector();
@@ -28,11 +17,6 @@ class ResultList implements \IteratorAggregate
         }
     }
 
-    /**
-     * Adds a result to the list
-     *
-     * @param ?Result $result
-     */
     public function addResult(?Result $result)
     {
         if(empty($result)) {
@@ -42,20 +26,11 @@ class ResultList implements \IteratorAggregate
         $this->results->push($result);
     }
 
-    /**
-     * Gets all the results.
-     * This method returns a unmodifiable copy of the original collection
-     *
-     * @return Vector
-     */
     public function getResults(): Vector
     {
-        /** @var Vector $copy */
-        $copy = $this->results->copy();
-        return $copy;
+        return $this->results->copy();
     }
 
-    /** {@inheritdoc} */
     public function getIterator(): \Iterator
     {
         return new \IteratorIterator($this->results);

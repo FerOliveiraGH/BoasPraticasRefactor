@@ -1,22 +1,14 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler;
 
 use FerOliveira\GoogleCrawler\Exception\InvalidUrlException;
 
-/**
- * Class that represents a Google Result
- *
- * @package FerOliveira\GoogleCrawler
- * @author Fernando Oliveira
- */
 class Result
 {
-    /** @var string $title */
-    private $title;
-    /** @var string $url */
-    private $url;
-    /** @var string $description */
-    private $description;
+    private string $title;
+    private string $url;
+    private string $description;
 
     public function getTitle(): string
     {
@@ -34,9 +26,7 @@ class Result
         return $this->url;
     }
 
-    /**
-     * @throws InvalidUrlException
-     */
+    /** @throws InvalidUrlException */
     public function setUrl(string $url): Result
     {
         if (!filter_var($url, FILTER_VALIDATE_URL)) {

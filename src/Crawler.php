@@ -1,4 +1,5 @@
 <?php
+
 namespace FerOliveira\GoogleCrawler;
 
 use FerOliveira\GoogleCrawler\Exception\InvalidGoogleHtmlException;
@@ -8,12 +9,6 @@ use FerOliveira\GoogleCrawler\Proxy\ProxyFactory;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
-/**
- * Google Crawler
- *
- * @package FerOliveira\GoogleCrawler
- * @author Fernando Oliveira
- */
 class Crawler
 {
     private GoogleHttpClient $httpClient;
@@ -28,14 +23,6 @@ class Crawler
         $this->urlParser = $factory->createUrlParser();
     }
 
-    /**
-     * Returns the 100 first found results for the specified search term
-     *
-     * @param SearchTermInterface $searchTerm
-     * @param string $googleDomain
-     * @param string $countryCode
-     * @return ResultList
-     */
     public function getResults(
         SearchTermInterface $searchTerm,
         string $googleDomain = 'google.com',

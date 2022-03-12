@@ -3,7 +3,6 @@
 namespace FerOliveira\GoogleCrawler;
 
 use DOMElement;
-use FerOliveira\GoogleCrawler\Exception\InvalidResultException;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Symfony\Component\DomCrawler\Link;
@@ -45,14 +44,6 @@ class DomElementParser
         return $this->createResult($resultLink, $descriptionElement);
     }
 
-    /**
-     * If $resultLink is a valid link, this method assembles the Result and adds it to $googleResults
-     *
-     * @param Link $resultLink
-     * @param DOMElement $descriptionElement
-     * @return Result
-     * @throws InvalidResultException
-     */
     private function createResult(Link $resultLink, DOMElement $descriptionElement): Result
     {
         $description = $descriptionElement->nodeValue
