@@ -1,5 +1,5 @@
 <?php
-namespace FerOliveira\GoogleCrawler\Tests\Functional;
+namespace FerOliveira\GoogleCrawler\Tests\Feature;
 
 use FerOliveira\GoogleCrawler\Crawler;
 use FerOliveira\GoogleCrawler\Exception\InvalidGoogleHtmlException;

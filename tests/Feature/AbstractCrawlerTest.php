@@ -1,5 +1,5 @@
 <?php
-namespace FerOliveira\GoogleCrawler\Tests\Functional;
+namespace FerOliveira\GoogleCrawler\Tests\Feature;
 
 use FerOliveira\GoogleCrawler\Result;
 use FerOliveira\GoogleCrawler\ResultList;
