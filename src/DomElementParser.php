@@ -4,18 +4,17 @@ namespace FerOliveira\GoogleCrawler;
 
 use DOMElement;
 use FerOliveira\GoogleCrawler\Exception\InvalidResultException;
-use FerOliveira\GoogleCrawler\Proxy\GoogleProxyInterface;
-use FerOliveira\GoogleCrawler\Proxy\NoProxy;
+use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Symfony\Component\DomCrawler\Link;
 
 class DomElementParser
 {
-    private ?GoogleProxyInterface $proxy;
+    private GoogleUrlParse $urlParser;
 
-    public function __construct(GoogleProxyInterface $proxy = null)
+    public function __construct(GoogleUrlParse $urlParser)
     {
-        $this->proxy = $proxy ?? new NoProxy();
+        $this->urlParser = $urlParser;
     }
 
     public function parse(DOMElement $resultDomElement): ?Result
@@ -62,7 +61,7 @@ class DomElementParser
         $googleResult = new Result();
         $googleResult
             ->setTitle($resultLink->getNode()->nodeValue)
-            ->setUrl($this->proxy->parseUrl($resultLink->getUri()))
+            ->setUrl($this->urlParser->parseUrl($resultLink->getUri()))
             ->setDescription($description);
 
         return $googleResult;

@@ -2,13 +2,11 @@
 namespace FerOliveira\GoogleCrawler;
 
 use FerOliveira\GoogleCrawler\Exception\InvalidGoogleHtmlException;
-use FerOliveira\GoogleCrawler\Exception\InvalidResultException;
-use FerOliveira\GoogleCrawler\Proxy\{
-    GoogleProxyInterface, NoProxy
-};
+use FerOliveira\GoogleCrawler\Proxy\HttpClient\GoogleHttpClient;
+use FerOliveira\GoogleCrawler\Proxy\NoProxyFactory;
+use FerOliveira\GoogleCrawler\Proxy\ProxyFactory;
+use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
-use Symfony\Component\DomCrawler\Link;
-use DOMElement;
 
 /**
  * Google Crawler
@@ -18,13 +16,16 @@ use DOMElement;
  */
 class Crawler
 {
-    /** @var GoogleProxyInterface $proxy */
-    protected $proxy;
+    private GoogleHttpClient $httpClient;
+    private GoogleUrlParse $urlParser;
 
     public function __construct(
-        GoogleProxyInterface $proxy = null
+        ProxyFactory $factory = null
     ) {
-        $this->proxy = $proxy ?? new NoProxy();
+        $factory = $factory ?? new NoProxyFactory();
+
+        $this->httpClient = $factory->createHttpClient();
+        $this->urlParser = $factory->createUrlParser();
     }
 
     /**
@@ -46,14 +47,14 @@ class Crawler
 
         $googleUrl = "https://$googleDomain/search?q={$searchTerm}&num=100";
         $googleUrl = !empty($countryCode) ? $googleUrl . "&gl={$countryCode}" : $googleUrl;
-        $response = $this->proxy->getHttpResponse($googleUrl);
+        $response = $this->httpClient->getHttpResponse($googleUrl);
         $stringResponse = (string) $response->getBody();
         $domCrawler = new DomCrawler($stringResponse);
         $googleResultList = $this->createGoogleResultList($domCrawler);
 
         $resultList = new ResultList($googleResultList->count());
 
-        $domElementParser = new DomElementParser($this->proxy);
+        $domElementParser = new DomElementParser($this->urlParser);
         foreach ($googleResultList as $googleResultElement) {
             $parsedResult = $domElementParser->parse($googleResultElement);
             $resultList->addResult($parsedResult);

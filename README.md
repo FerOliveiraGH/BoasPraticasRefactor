@@ -44,7 +44,7 @@ use FerOliveira\GoogleCrawler\{
 };
 
 $searchTerm = new SearchTerm('Test');
-$crawler = new Crawler($searchTerm); // or new Crawler($searchTerm, new NoProxy());
+$crawler = new Crawler($searchTerm); // or new Crawler($searchTerm, new NoProxyFactory());
 
 $resultList = $crawler->getResults();
 ```

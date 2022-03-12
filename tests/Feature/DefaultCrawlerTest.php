@@ -3,7 +3,7 @@ namespace FerOliveira\GoogleCrawler\Tests\Feature;
 
 use FerOliveira\GoogleCrawler\Crawler;
 use FerOliveira\GoogleCrawler\Exception\InvalidGoogleHtmlException;
-use FerOliveira\GoogleCrawler\Proxy\CommonProxy;
+use FerOliveira\GoogleCrawler\Proxy\CommonProxyFactory;
 use FerOliveira\GoogleCrawler\Proxy\KProxy;
 use FerOliveira\GoogleCrawler\SearchTerm;
 use GuzzleHttp\Exception\ClientException;
@@ -27,9 +27,9 @@ class DefaultCrawlerTest extends AbstractCrawlerTest
      */
     public function testSearchResultsWithCommonProxy(string $endpoint)
     {
-        $commonProxy = new CommonProxy($endpoint);
+        $proxyFactory = new CommonProxyFactory($endpoint);
         $searchTerm = new SearchTerm('Test');
-        $crawler = new Crawler($commonProxy);
+        $crawler = new Crawler($proxyFactory);
         try {
             $results = $crawler->getResults($searchTerm);
 

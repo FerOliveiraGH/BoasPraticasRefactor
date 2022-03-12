@@ -3,8 +3,10 @@ namespace FerOliveira\GoogleCrawler\Tests\Unit;
 
 use FerOliveira\GoogleCrawler\Crawler;
 use FerOliveira\GoogleCrawler\Exception\InvalidGoogleHtmlException;
-use FerOliveira\GoogleCrawler\Proxy\GoogleProxyInterface;
-use FerOliveira\GoogleCrawler\Proxy\NoProxy;
+use FerOliveira\GoogleCrawler\Proxy\HttpClient\GoogleHttpClient;
+use FerOliveira\GoogleCrawler\Proxy\NoProxyFactory;
+use FerOliveira\GoogleCrawler\Proxy\ProxyFactory;
+use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use FerOliveira\GoogleCrawler\SearchTerm;
 use FerOliveira\GoogleCrawler\SearchTermInterface;
 use PHPUnit\Framework\TestCase;
@@ -17,14 +19,14 @@ class CrawlerTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $domain = 'http://google.com';
-        $crawler = new Crawler(new NoProxy());
+        $crawler = new Crawler(new NoProxyFactory());
         $crawler->getResults(new SearchTerm(''), $domain);
     }
 
     public function testTryingToInstantiateACrawlerWithoutGoogleOnTheDomainMustFail()
     {
         $this->expectException(\InvalidArgumentException::class);
-        $crawler = new Crawler(new NoProxy());
+        $crawler = new Crawler(new NoProxyFactory());
         $crawler->getResults(new SearchTerm(''), 'invalid-domain');
     }
 
@@ -39,9 +41,21 @@ class CrawlerTest extends TestCase
         $responseMock->method('getBody')
             ->willReturn($streamMock);
 
-        $proxyMock = $this->createMock(GoogleProxyInterface::class);
-        $proxyMock->method('getHttpResponse')
+        $httpClientMock = $this->createMock(GoogleHttpClient::class);
+        $httpClientMock->method('getHttpResponse')
             ->willReturn($responseMock);
+
+        $responseMock = $this->createMock(ResponseInterface::class);
+        $responseMock->method('getBody')
+            ->willReturn($streamMock);
+
+        $urlParserMock = $this->createMock(GoogleUrlParse::class);
+
+        $proxyMock = $this->createMock(ProxyFactory::class);
+        $proxyMock->method('createUrlParser')
+            ->willReturn($urlParserMock);
+        $proxyMock->method('createHttpClient')
+            ->willReturn($httpClientMock);
         $searchTermMock = $this->createMock(SearchTermInterface::class);
         $searchTermMock
             ->method('__toString')
