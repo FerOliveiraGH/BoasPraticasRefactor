@@ -10,6 +10,7 @@ class PersonalizedCrawlerTest extends AbstractCrawlerTest
 {
     public function testSearchOnBrazilianGoogleWithoutProxy()
     {
+//        $this->markTestSkipped('Implementation outdated');
         $searchTerm = new SearchTerm('Test');
         $crawler = new Crawler(new NoProxy(), 'google.com.br', 'BR');
 

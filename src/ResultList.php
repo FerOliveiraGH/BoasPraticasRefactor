@@ -31,10 +31,14 @@ class ResultList implements \IteratorAggregate
     /**
      * Adds a result to the list
      *
-     * @param Result $result
+     * @param ?Result $result
      */
-    public function addResult(Result $result)
+    public function addResult(?Result $result)
     {
+        if(empty($result)) {
+            return;
+        }
+
         $this->results->push($result);
     }
 

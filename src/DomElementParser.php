@@ -18,28 +18,29 @@ class DomElementParser
         $this->proxy = $proxy ?? new NoProxy();
     }
 
-    public function parse(DOMElement $resultDomElement): Result
+    public function parse(DOMElement $resultDomElement): ?Result
     {
         $resultCrawler = new DomCrawler($resultDomElement);
         $linkElement = $resultCrawler->filterXPath('//a')->getNode(0);
         if (is_null($linkElement)) {
-            throw new InvalidResultException('Link element not found');
+            return null;
         }
 
-        $resultLink = new Link($linkElement, 'http://google.com/');
-        $descriptionElement = $resultCrawler->filterXPath('//div[@class="BNeawe s3v9rd AP7Wnd"]//div[@class="BNeawe s3v9rd AP7Wnd"]')->getNode(0);
+        $uri = 'http://google.com/';
 
-        if (is_null($descriptionElement)) {
-            throw new InvalidResultException('Description element not found');
-        }
-
+        $resultLink = new Link($linkElement, $uri);
+        $descriptionElement = $resultCrawler
+            ->filterXPath('//div[@class="BNeawe s3v9rd AP7Wnd"]//div[@class="BNeawe s3v9rd AP7Wnd"]')
+            ->getNode(0);
         $isImageSuggestion = $resultCrawler->filterXpath('//img')->count() > 0;
-        if ($isImageSuggestion) {
-            throw new InvalidResultException('Result is an image suggestion');
-        }
+        $isNotGoogleUrl = strpos($resultLink->getUri(), 'http://google.com') === false;
 
-        if (strpos($resultLink->getUri(), 'http://google.com') === false) {
-            throw new InvalidResultException('Result is a google suggestion');
+        if (
+            empty($descriptionElement)
+            || $isImageSuggestion
+            || $isNotGoogleUrl
+        ) {
+            return null;
         }
 
         return $this->createResult($resultLink, $descriptionElement);

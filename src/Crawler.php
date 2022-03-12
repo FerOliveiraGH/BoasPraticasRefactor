@@ -55,16 +55,8 @@ class Crawler
 
         $domElementParser = new DomElementParser($this->proxy);
         foreach ($googleResultList as $googleResultElement) {
-            try {
-                $parsedResult = $domElementParser->parse($googleResultElement);
-                $resultList->addResult($parsedResult);
-            } catch (InvalidResultException $exception) {
-                error_log(
-                    'Error parsing the following result: ' . print_r($googleResultElement, true),
-                    3,
-                    __DIR__ . '/../var/log/crawler-errors.log'
-                );
-            }
+            $parsedResult = $domElementParser->parse($googleResultElement);
+            $resultList->addResult($parsedResult);
         }
 
         return $resultList;
@@ -72,7 +64,7 @@ class Crawler
 
     private function createGoogleResultList(DomCrawler $domCrawler): DomCrawler
     {
-        $googleResultList = $domCrawler->filterXPath('//div[@class="ZINbbc xpd O9g5cc uUPGi"]');
+        $googleResultList = $domCrawler->filterXPath('//div[@class="ZINbbc luh4tb xpd O9g5cc uUPGi"]');
         if ($googleResultList->count() === 0) {
             throw new InvalidGoogleHtmlException('No parseable element found');
         }
