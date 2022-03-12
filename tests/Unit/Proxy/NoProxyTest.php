@@ -14,7 +14,8 @@ class NoProxyTest extends TestCase
         $this->expectException(InvalidResultException::class);
         $noProxyFactory = new NoProxyFactory();
         $noProxy = $noProxyFactory->createUrlParser();
-        $invalidUrl = 'http://google.com/search?q=Test&num=100&ie=UTF-8&prmd=ivnsla&source=univ&tbm=nws&tbo=u&sa=X&ved=0ahUKEwiF5PS6w6vSAhWJqFQKHQ_wBDAQqAIIKw';
+        $invalidUrl = 'http://google.com/search?q=Test&num=100&ie=UTF-8&prmd=ivnsla&source=univ&tbm=nws&tbo=u&sa=X&ve'
+            . 'd=0ahUKEwiF5PS6w6vSAhWJqFQKHQ_wBDAQqAIIKw';
         $noProxy->parseUrl($invalidUrl);
     }
 
@@ -22,7 +23,8 @@ class NoProxyTest extends TestCase
     {
         $noProxyFactory = new NoProxyFactory();
         $noProxy = $noProxyFactory->createUrlParser();
-        $validUrl = 'http://google.com//url?q=http://www.speedtest.net/pt/&sa=U&ved=0ahUKEwjYuPbkxqvSAhXFQZAKHdpyAxMQFggUMAA&usg=AFQjCNFR74JMZRVu3EUNUUHa7o_1ETZoiQ';
+        $validUrl = 'http://google.com//url?q=http://www.speedtest.net/pt/&sa=U&ved=0ahUKEwjYuPbkxqvSAhXFQZAKHdpyAxMQ'
+            . 'FggUMAA&usg=AFQjCNFR74JMZRVu3EUNUUHa7o_1ETZoiQ';
         $url = $noProxy->parseUrl($validUrl);
         static::assertEquals('http://www.speedtest.net/pt/', $url);
     }
