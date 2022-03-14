@@ -2,6 +2,8 @@
 
 namespace FerOliveira\GoogleCrawler\Exception;
 
-class InvalidResultException extends \RuntimeException
+use RuntimeException;
+
+class InvalidResultException extends RuntimeException
 {
 }

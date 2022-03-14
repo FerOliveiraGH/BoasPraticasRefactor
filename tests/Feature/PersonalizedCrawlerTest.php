@@ -12,9 +12,9 @@ class PersonalizedCrawlerTest extends AbstractCrawlerTest
     public function testSearchOnBrazilianGoogleWithoutProxy()
     {
         $searchTerm = new SearchTerm('Test');
-        $crawler = new Crawler(new NoProxyFactory(), 'google.com.br', 'BR');
+        $crawler = new Crawler(new NoProxyFactory());
 
-        $results = $crawler->getResults($searchTerm);
+        $results = $crawler->getResults($searchTerm,'google.com.br', 'BR');
         $this->checkResults($results);
     }
 

@@ -10,6 +10,7 @@ use FerOliveira\GoogleCrawler\Proxy\ProxyFactory;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use FerOliveira\GoogleCrawler\SearchTerm;
 use FerOliveira\GoogleCrawler\SearchTermInterface;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
@@ -18,15 +19,15 @@ class CrawlerTest extends TestCase
 {
     public function testTryingToGetResultsWithHttpOnGoogleDomainMustFail()
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $domain = 'http://google.com';
+        $this->expectException(InvalidArgumentException::class);
+        $domain = 'https://google.com';
         $crawler = new Crawler(new NoProxyFactory());
         $crawler->getResults(new SearchTerm(''), $domain);
     }
 
     public function testTryingToInstantiateACrawlerWithoutGoogleOnTheDomainMustFail()
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $crawler = new Crawler(new NoProxyFactory());
         $crawler->getResults(new SearchTerm(''), 'invalid-domain');
     }
@@ -36,7 +37,7 @@ class CrawlerTest extends TestCase
         $this->expectException(InvalidGoogleHtmlException::class);
         $streamMock = $this->createMock(StreamInterface::class);
         $streamMock->method('__toString')
-            ->willReturn('<html><head></head><body>Invalid HTML</body></html>');
+            ->willReturn('<html lang="pt-br"><head><title>Invalid HTML</title></head><body>Invalid HTML</body></html>');
 
         $responseMock = $this->createMock(ResponseInterface::class);
         $responseMock->method('getBody')

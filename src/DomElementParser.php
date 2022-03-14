@@ -25,14 +25,14 @@ class DomElementParser
             return null;
         }
 
-        $uri = 'http://google.com/';
+        $uri = 'https://google.com/';
 
         $resultLink = new Link($linkElement, $uri);
         $descriptionElement = $resultCrawler
             ->filterXPath('//div[@class="BNeawe s3v9rd AP7Wnd"]//div[@class="BNeawe s3v9rd AP7Wnd"]')
             ->getNode(0);
         $isImageSuggestion = $resultCrawler->filterXpath('//img')->count() > 0;
-        $isNotGoogleUrl = strpos($resultLink->getUri(), 'http://google.com') === false;
+        $isNotGoogleUrl = strpos($resultLink->getUri(), 'https://google.com') === false;
 
         if (
             empty($descriptionElement)

@@ -3,8 +3,11 @@
 namespace FerOliveira\GoogleCrawler;
 
 use Ds\Vector;
+use Iterator;
+use IteratorAggregate;
+use IteratorIterator;
 
-class ResultList implements \IteratorAggregate
+class ResultList implements IteratorAggregate
 {
     private Vector $results;
 
@@ -31,8 +34,8 @@ class ResultList implements \IteratorAggregate
         return $this->results->copy();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): Iterator
     {
-        return new \IteratorIterator($this->results);
+        return new IteratorIterator($this->results);
     }
 }

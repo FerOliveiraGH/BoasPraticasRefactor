@@ -17,7 +17,7 @@ class ResultTest extends TestCase
 
     public function testValidUrlMustNotThrowException()
     {
-        $url = 'http://example.com';
+        $url = 'https://example.com';
         $result = new Result();
         $result->setUrl($url);
 

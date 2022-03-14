@@ -2,6 +2,8 @@
 
 namespace FerOliveira\GoogleCrawler\Exception;
 
-class InvalidGoogleHtmlException extends \RuntimeException
+use RuntimeException;
+
+class InvalidGoogleHtmlException extends RuntimeException
 {
 }

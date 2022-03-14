@@ -2,6 +2,8 @@
 
 namespace FerOliveira\GoogleCrawler\Exception;
 
-class InvalidUrlException extends \InvalidArgumentException
+use InvalidArgumentException;
+
+class InvalidUrlException extends InvalidArgumentException
 {
 }

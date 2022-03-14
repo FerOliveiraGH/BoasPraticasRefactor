@@ -2,13 +2,14 @@
 
 namespace FerOliveira\GoogleCrawler\Tests\Unit;
 
+use Exception;
 use FerOliveira\GoogleCrawler\Result;
 use FerOliveira\GoogleCrawler\ResultList;
 use PHPUnit\Framework\TestCase;
 
 class ResultListTest extends TestCase
 {
-    public function testAddResult()
+    public function testAddResult(): ResultList
     {
         $result = $this->getResultMock();
         $list = new ResultList();
@@ -40,6 +41,7 @@ class ResultListTest extends TestCase
         static::assertInstanceOf(ResultList::class, $resultListWithCapacity);
     }
 
+    /** @throws Exception */
     public function testGetIteratorMustReturnAllItems()
     {
         $result1 = $this->getResultMock();

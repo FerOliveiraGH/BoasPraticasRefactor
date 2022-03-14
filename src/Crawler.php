@@ -7,6 +7,7 @@ use FerOliveira\GoogleCrawler\Proxy\HttpClient\GoogleHttpClient;
 use FerOliveira\GoogleCrawler\Proxy\NoProxyFactory;
 use FerOliveira\GoogleCrawler\Proxy\ProxyFactory;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
+use InvalidArgumentException;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class Crawler
@@ -29,11 +30,11 @@ class Crawler
         string $countryCode = ''
     ): ResultList {
         if (stripos($googleDomain, 'google.') === false || stripos($googleDomain, 'http') === 0) {
-            throw new \InvalidArgumentException('Invalid google domain');
+            throw new InvalidArgumentException('Invalid google domain');
         }
 
-        $googleUrl = "https://$googleDomain/search?q={$searchTerm}&num=100";
-        $googleUrl = !empty($countryCode) ? $googleUrl . "&gl={$countryCode}" : $googleUrl;
+        $googleUrl = "https://$googleDomain/search?q=$searchTerm&num=100";
+        $googleUrl = !empty($countryCode) ? $googleUrl . "&gl=$countryCode" : $googleUrl;
         $response = $this->httpClient->getHttpResponse($googleUrl);
         $stringResponse = (string) $response->getBody();
         $domCrawler = new DomCrawler($stringResponse);
