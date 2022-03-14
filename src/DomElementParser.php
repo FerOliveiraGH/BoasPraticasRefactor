@@ -3,6 +3,7 @@
 namespace FerOliveira\GoogleCrawler;
 
 use DOMElement;
+use DOMException;
 use DOMNode;
 use FerOliveira\GoogleCrawler\Proxy\Link;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
@@ -17,6 +18,7 @@ class DomElementParser
         $this->urlParser = $urlParser;
     }
 
+    /** @throws DOMException */
     public function parse(DOMElement $resultDomElement): ?Result
     {
         $resultCrawler = new DomCrawler($resultDomElement);
