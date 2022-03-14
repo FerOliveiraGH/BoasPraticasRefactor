@@ -5,7 +5,6 @@ namespace FerOliveira\GoogleCrawler;
 use DOMElement;
 use DOMException;
 use DOMNode;
-use FerOliveira\GoogleCrawler\Proxy\Link;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 

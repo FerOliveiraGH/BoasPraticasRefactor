@@ -1,6 +1,6 @@
 <?php
 
-namespace FerOliveira\GoogleCrawler\Proxy;
+namespace FerOliveira\GoogleCrawler;
 
 use DOMElement;
 use DOMException;
