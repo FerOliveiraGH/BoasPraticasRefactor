@@ -3,9 +3,10 @@
 namespace FerOliveira\GoogleCrawler;
 
 use DOMElement;
+use DOMNode;
+use FerOliveira\GoogleCrawler\Proxy\Link;
 use FerOliveira\GoogleCrawler\Proxy\UrlParser\GoogleUrlParse;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
-use Symfony\Component\DomCrawler\Link;
 
 class DomElementParser
 {
@@ -44,7 +45,7 @@ class DomElementParser
         return $this->createResult($resultLink, $descriptionElement);
     }
 
-    private function createResult(Link $resultLink, DOMElement $descriptionElement): Result
+    private function createResult(Link $resultLink, DOMNode $descriptionElement): Result
     {
         $description = $descriptionElement->nodeValue
             ?? 'A description for this result isn\'t available due to the robots.txt file.';
