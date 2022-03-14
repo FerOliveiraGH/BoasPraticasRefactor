@@ -22,7 +22,7 @@ class ResultList implements IteratorAggregate
 
     public function addResult(?Result $result)
     {
-        if(empty($result)) {
+        if (empty($result)) {
             return;
         }
 
