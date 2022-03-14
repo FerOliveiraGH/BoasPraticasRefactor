@@ -18,29 +18,33 @@ class DomElementParser
         $this->urlParser = $urlParser;
     }
 
-    /** @throws DOMException */
     public function parse(DOMElement $resultDomElement): ?Result
     {
-        $resultCrawler = new DomCrawler($resultDomElement);
-        $linkElement = $resultCrawler->filterXPath('//a')->getNode(0);
-        if (is_null($linkElement)) {
-            return null;
-        }
+        try {
+            $resultCrawler = new DomCrawler($resultDomElement);
+            $linkElement = $resultCrawler->filterXPath('//a')->getNode(0);
 
-        $uri = 'https://google.com/';
+            if (is_null($linkElement)) {
+                throw new DOMException('Invalid element.');
+            }
 
-        $resultLink = new Link($linkElement, $uri);
-        $descriptionElement = $resultCrawler
-            ->filterXPath('//div[@class="BNeawe s3v9rd AP7Wnd"]//div[@class="BNeawe s3v9rd AP7Wnd"]')
-            ->getNode(0);
-        $isImageSuggestion = $resultCrawler->filterXpath('//img')->count() > 0;
-        $isNotGoogleUrl = strpos($resultLink->getUri(), 'https://google.com') === false;
+            $uri = 'https://google.com/';
 
-        if (
-            empty($descriptionElement)
-            || $isImageSuggestion
-            || $isNotGoogleUrl
-        ) {
+            $resultLink = new Link($linkElement, $uri);
+            $descriptionElement = $resultCrawler
+                ->filterXPath('//div[@class="BNeawe s3v9rd AP7Wnd"]//div[@class="BNeawe s3v9rd AP7Wnd"]')
+                ->getNode(0);
+            $isImageSuggestion = $resultCrawler->filterXpath('//img')->count() > 0;
+            $isNotGoogleUrl = strpos($resultLink->getUri(), 'https://google.com') === false;
+
+            if (
+                empty($descriptionElement)
+                || $isImageSuggestion
+                || $isNotGoogleUrl
+            ) {
+                throw new DOMException('Invalid process element.');
+            }
+        } catch (DOMException $e) {
             return null;
         }
 
