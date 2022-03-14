@@ -36,7 +36,7 @@ class Crawler
         $googleUrl = "https://$googleDomain/search?q=$searchTerm&num=100";
         $googleUrl = !empty($countryCode) ? $googleUrl . "&gl=$countryCode" : $googleUrl;
         $response = $this->httpClient->getHttpResponse($googleUrl);
-        $stringResponse = (string) $response->getBody();
+        $stringResponse = (string)$response->getBody();
         $domCrawler = new DomCrawler($stringResponse);
         $googleResultList = $this->createGoogleResultList($domCrawler);
 
